@@ -212,9 +212,27 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
         <span class="t">Set My Sol<small>BlanketBaron</small><span class="bar" role="slider" aria-label="Seek Set My Sol" tabindex="-1"></span></span>
         <span class="time">2:21</span>
       </li>
+      <li data-src="audio/asleepAtKeyboard.mp3">
+        <button class="play" type="button" aria-label="Play Asleep at Keyboard">
+          <svg class="i-play" viewBox="0 0 16 16"><path d="M4 2.5v11l9.5-5.5z"/></svg>
+          <svg class="i-pause" viewBox="0 0 16 16"><path d="M3.5 2.5h3v11h-3zM9.5 2.5h3v11h-3z"/></svg>
+        </button>
+        <span class="no">TECC-003</span>
+        <span class="t">Asleep at Keyboard<small>BlanketBaron</small><span class="bar" role="slider" aria-label="Seek Asleep at Keyboard" tabindex="-1"></span></span>
+        <span class="time">2:14</span>
+      </li>
+      <li data-src="audio/doAnything.mp3">
+        <button class="play" type="button" aria-label="Play Do Anything">
+          <svg class="i-play" viewBox="0 0 16 16"><path d="M4 2.5v11l9.5-5.5z"/></svg>
+          <svg class="i-pause" viewBox="0 0 16 16"><path d="M3.5 2.5h3v11h-3zM9.5 2.5h3v11h-3z"/></svg>
+        </button>
+        <span class="no">TECC-004</span>
+        <span class="t">Do Anything<small>BlanketBaron</small><span class="bar" role="slider" aria-label="Seek Do Anything" tabindex="-1"></span></span>
+        <span class="time">3:03</span>
+      </li>
       <li class="next">
         <span></span>
-        <span class="no">TECC-003</span>
+        <span class="no">TECC-005</span>
         <span class="t">—</span>
         <span class="st">Dreaming</span>
       </li>
@@ -278,9 +296,10 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
     }
 
     rows.forEach(function (li) {
+      li.dataset.time = li.querySelector('.time').textContent;
       li.querySelector('.play').addEventListener('click', function () {
         if (current !== li) {
-          if (current) current.querySelector('.time').textContent = fmt(audio.duration || 141);
+          if (current) current.querySelector('.time').textContent = current.dataset.time;
           current = li;
           audio.src = li.dataset.src;
           audio.play();
@@ -308,7 +327,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
       var list = Array.prototype.slice.call(rows);
       var next = list[list.indexOf(current) + 1];
       current.querySelector('.bar').style.setProperty('--p', '0%');
-      current.querySelector('.time').textContent = fmt(audio.duration);
+      current.querySelector('.time').textContent = current.dataset.time;
       if (next) next.querySelector('.play').click(); else { current = null; sync(); }
     });
   })();
