@@ -237,9 +237,10 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
 <section class="block join" id="join">
   <div class="wrap">
     <h2>Hear new releases first.</h2>
-    <form id="joinForm" novalidate>
+    <form id="joinForm" action="https://buttondown.com/api/emails/embed-subscribe/thirdeyecatclub" method="post" target="_blank" novalidate>
       <label class="sr" for="email">Email</label>
-      <input type="email" id="email" placeholder="your email" required>
+      <input type="email" id="email" name="email" placeholder="your email" autocomplete="email" required>
+      <input type="hidden" name="embed" value="1">
       <button type="submit">Join</button>
       <p id="joinMsg" role="status"></p>
     </form>
@@ -325,14 +326,16 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
     });
   })();
 
-  // Sign-up form isn't connected to a mailing list yet
+  // Sign-ups go to Buttondown, which opens its confirmation page in a new tab
   document.getElementById('joinForm').addEventListener('submit', function (e) {
-    e.preventDefault();
     var input = document.getElementById('email');
     var msg = document.getElementById('joinMsg');
-    msg.textContent = (!input.value || !input.checkValidity())
-      ? 'Enter an email like name@example.com.'
-      : 'Sign-ups open soon. This form is not connected yet.';
+    if (!input.value || !input.checkValidity()) {
+      e.preventDefault();
+      msg.textContent = 'Enter an email like name@example.com.';
+      return;
+    }
+    msg.textContent = 'Thanks! Check your inbox to confirm.';
   });
 </script>
 </body>
